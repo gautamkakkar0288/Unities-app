@@ -35,13 +35,24 @@ Blocked capabilities are not faked. Each one has a typed repository interface, a
 `Pending*` implementation that fails with a `MissingBackendCapabilityError`
 naming the gap, and a UI state that tells the student it is not in the app yet.
 
+### Not yet verified on a machine
+
+The Phase 1 code was authored and committed through an agent with GitHub
+access and **no Flutter SDK**, so the following have not been executed even
+once: `flutter pub get`, `flutter analyze`, `flutter test`,
+`flutter build apk --debug`, and any iOS build. Dependency version ranges in
+`pubspec.yaml` are also unresolved. Expect to fix a small number of analyzer
+findings and version constraints on the first local run — CI runs all of these
+commands, so the first pipeline run is the real verification.
+
 ---
 
 ## Requirements
 
-- Flutter **3.24+** stable (Dart **3.4+**). Some APIs used here
-  (`Color.withValues`, `MediaQuery.withClampedTextScaling`, Material 3 surface
-  container roles) require a recent stable channel.
+- Flutter **3.27+** stable (Dart **3.6+**) is recommended. `Color.withValues`
+  requires 3.27; `MediaQuery.withClampedTextScaling` and the Material 3 surface
+  container roles require 3.22+. `pubspec.yaml` declares the lower bound, but
+  3.27+ is the tested intent.
 - Xcode for iOS, Android Studio / SDK for Android.
 - A running Cirqles web app to talk to (`pnpm dev` in the `Unities` repository).
 
