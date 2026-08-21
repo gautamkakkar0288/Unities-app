@@ -1,0 +1,51 @@
+# Flutter / Dart
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock.bak
+coverage/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+
+# Android (generated / local)
+android/.gradle/
+android/local.properties
+android/key.properties
+android/app/debug/
+android/app/profile/
+android/app/release/
+*.jks
+*.keystore
+
+# iOS (generated / local)
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Runner/GeneratedPluginRegistrant.*
+**/*.mobileprovision
+**/*.p12
+**/*.cer
+ios/fastlane/report.xml
+
+# Local configuration and secrets — never commit these.
+# Real values live only on developer machines and in CI secrets.
+.env
+.env.*
+!.env.example
+*.local
+secrets/
+**/google-services.json
+**/GoogleService-Info.plist
