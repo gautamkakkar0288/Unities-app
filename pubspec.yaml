@@ -1,0 +1,49 @@
+name: cirqles
+description: >-
+  Cirqles mobile client. A Flutter application that talks to the existing
+  Cirqles web/backend repository (gautamkakkar0288/Unities). This repository
+  contains no server-side business logic and no database.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Networking. Chosen over package:http because the Cirqles backend uses
+  # Auth.js cookie sessions, and dio gives us interceptors + a cookie manager
+  # rather than hand-rolled header plumbing.
+  dio: ^5.4.0
+  dio_cookie_manager: ^3.1.1
+  cookie_jar: ^4.0.8
+
+  # State management. Riverpod: compile-safe DI, testable without widgets,
+  # scales to a large feature set without a global service locator.
+  flutter_riverpod: ^2.5.1
+
+  # Declarative routing with redirects and deep links.
+  go_router: ^14.0.0
+
+  # Persistence. Secure storage holds the session cookie; preferences hold
+  # non-sensitive UI state only.
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.2.0
+
+  # Dates/times in the student's locale (event cards, notification timestamps).
+  intl: ^0.19.0
+
+  # Hand-off to the web app for flows the backend only exposes over HTML
+  # (registration, email verification). See ARCHITECTURE.md.
+  url_launcher: ^6.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
