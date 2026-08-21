@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../app/theme/sizing.dart';
 import '../../app/theme/spacing.dart';
 import '../../core/utils/formatters.dart';
-import '../models/event.dart';
 import '../models/enums.dart';
+import '../models/event.dart';
 import 'status_chip.dart';
 import 'surface_card.dart';
 
@@ -35,8 +35,7 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isCompact =
-        MediaQuery.sizeOf(context).width < Sizing.compactPhoneWidth;
+    final chips = _statusChips();
 
     return SurfaceCard(
       onTap: onTap,
@@ -56,8 +55,7 @@ class EventCard extends StatelessWidget {
                   ),
                 ),
               ),
-              if (isSample)
-                const StatusChip(label: 'Sample', tone: StatusTone.neutral),
+              if (isSample) const StatusChip(label: 'Sample'),
             ],
           ),
           const SizedBox(height: Spacing.xs),
@@ -69,12 +67,12 @@ class EventCard extends StatelessWidget {
           ),
           const SizedBox(height: Spacing.sm),
           _MetaRow(event: event, communityName: communityName),
-          if (!isCompact || _statusChips(context).isNotEmpty) ...<Widget>[
+          if (chips.isNotEmpty) ...<Widget>[
             const SizedBox(height: Spacing.smPlus),
             Wrap(
               spacing: Spacing.sm,
               runSpacing: Spacing.sm,
-              children: _statusChips(context),
+              children: chips,
             ),
           ],
         ],
@@ -83,19 +81,18 @@ class EventCard extends StatelessWidget {
   }
 
   /// Status is expressed with text plus icon, never colour alone.
-  List<Widget> _statusChips(BuildContext context) {
-    final chips = <Widget>[];
-
+  List<Widget> _statusChips() {
     if (event.isCancelled) {
-      chips.add(
-        const StatusChip(
+      return const <Widget>[
+        StatusChip(
           label: 'Cancelled',
           tone: StatusTone.danger,
           icon: Icons.event_busy_rounded,
         ),
-      );
-      return chips;
+      ];
     }
+
+    final chips = <Widget>[];
 
     switch (event.viewerRegistrationState) {
       case RegistrationState.registered:
@@ -141,7 +138,6 @@ class EventCard extends StatelessWidget {
       chips.add(
         StatusChip(
           label: Formatters.fee(event.feeInPaise),
-          tone: StatusTone.neutral,
           icon: Icons.confirmation_number_outlined,
         ),
       );

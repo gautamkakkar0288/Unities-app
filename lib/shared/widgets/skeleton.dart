@@ -18,9 +18,10 @@ class Skeleton extends StatefulWidget {
     super.key,
   });
 
-  const Skeleton.text({double width = double.infinity, super.key})
+  /// Line-height block for placeholder text.
+  const Skeleton.line({double lineWidth = double.infinity, super.key})
       : height = 14,
-        width = width,
+        width = lineWidth,
         borderRadius = Radii.control;
 
   final double height;
@@ -54,9 +55,8 @@ class _SkeletonState extends State<Skeleton>
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, _) {
-          final t = animate
-              ? Curves.easeInOut.transform(_controller.value)
-              : 0.35;
+          final t =
+              animate ? Curves.easeInOut.transform(_controller.value) : 0.35;
           return Container(
             height: widget.height,
             width: widget.width,
@@ -75,7 +75,7 @@ class _SkeletonState extends State<Skeleton>
   }
 }
 
-/// Skeleton in the shape of an [SurfaceCard]-based list item.
+/// Skeleton shaped like a card-based list item.
 class CardSkeleton extends StatelessWidget {
   const CardSkeleton({super.key});
 
@@ -89,9 +89,9 @@ class CardSkeleton extends StatelessWidget {
         borderRadius: Radii.card,
         border: Border.all(color: scheme.outlineVariant),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const <Widget>[
+        children: <Widget>[
           Skeleton(height: 12, width: 96),
           SizedBox(height: Spacing.sm),
           Skeleton(height: 18),

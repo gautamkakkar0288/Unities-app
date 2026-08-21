@@ -25,11 +25,11 @@ class UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = CirqlesColors.of(context);
-    final textTheme = Theme.of(context).textTheme;
+    final url = imageUrl;
 
     return Semantics(
       label: semanticLabel,
-      image: imageUrl != null,
+      image: url != null,
       child: Container(
         height: size,
         width: size,
@@ -39,50 +39,41 @@ class UserAvatar extends StatelessWidget {
           shape: BoxShape.circle,
           border: Border.all(color: colors.brand.border),
         ),
-        child: imageUrl == null
-            ? _Initials(initials: initials, size: size, colors: colors)
+        child: url == null
+            ? _Initials(initials: initials, size: size)
             : Image.network(
-                imageUrl!,
+                url,
                 fit: BoxFit.cover,
                 // A slow avatar must never delay the row it sits in.
                 errorBuilder: (_, __, ___) =>
-                    _Initials(initials: initials, size: size, colors: colors),
+                    _Initials(initials: initials, size: size),
                 loadingBuilder: (_, child, progress) => progress == null
                     ? child
-                    : _Initials(
-                        initials: initials,
-                        size: size,
-                        colors: colors,
-                      ),
+                    : _Initials(initials: initials, size: size),
               ),
       ),
     );
   }
-
-  static TextStyle? _styleFor(TextTheme theme, double size) =>
-      size >= Sizing.avatarLg ? theme.titleLarge : theme.labelLarge;
 }
 
 class _Initials extends StatelessWidget {
-  const _Initials({
-    required this.initials,
-    required this.size,
-    required this.colors,
-  });
+  const _Initials({required this.initials, required this.size});
 
   final String initials;
   final double size;
-  final CirqlesColors colors;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = CirqlesColors.of(context);
+    final style = size >= Sizing.avatarLg
+        ? theme.textTheme.titleLarge
+        : theme.textTheme.labelLarge;
+
     return Center(
       child: Text(
         initials,
-        style: UserAvatar._styleFor(Theme.of(context).textTheme, size)
-            ?.copyWith(color: colors.brand.foreground == null
-                ? null
-                : colors.brand.base),
+        style: style?.copyWith(color: colors.brand.base),
       ),
     );
   }
